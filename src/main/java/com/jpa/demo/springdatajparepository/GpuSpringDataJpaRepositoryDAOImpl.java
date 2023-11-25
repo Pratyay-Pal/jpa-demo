@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 import com.jpa.demo.entity.gpuinfo;
 
 @Component
-public class GpuSpringDataJpaRepository {
+public class GpuSpringDataJpaRepositoryDAOImpl implements GpuSpringDataJpaRepositoryDAO{
 
-	private Logger logger = LogManager.getLogger(GpuSpringDataJpaRepository.class);
+	private Logger logger = LogManager.getLogger(GpuSpringDataJpaRepositoryDAOImpl.class);
 	
 	@Autowired
-	private GpuSpringDataJpaRepositoryDAO repository;
+	private GpuSpringDataJpaRepositoryJPA repository;
 	
 	public void insert(String gpuname, String company) {
 		gpuinfo gpu = new gpuinfo(gpuname, company);

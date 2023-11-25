@@ -16,7 +16,7 @@ import com.jpa.demo.allrequests.jdbcandspringdatajpa.SelectRequestJDBC;
 import com.jpa.demo.allrequests.jdbcandspringdatajpa.SelectResponse;
 import com.jpa.demo.allrequests.jdbcandspringdatajpa.UpdateRequestJDBC;
 import com.jpa.demo.entity.gpuinfo;
-import com.jpa.demo.springdatajparepository.GpuSpringDataJpaRepository;
+import com.jpa.demo.springdatajparepository.GpuSpringDataJpaRepositoryDAO;
 
 @RestController
 @RequestMapping("/SpringDataJPA")
@@ -25,33 +25,33 @@ public class SpringDataJpaController {
 	private Logger logger = LogManager.getLogger(SpringDataJpaController.class);
 	
 	@Autowired
-	private GpuSpringDataJpaRepository repositoryImpl;
+	private GpuSpringDataJpaRepositoryDAO springDataJpaRepositoryDAO;
 	
 	@PostMapping("/insert")
 	public ResponseEntity<?> insertRecordUsingSpringDataJpa(@RequestBody InsertRequestJDBC insertRequest){
 		logger.info("/insertRecordUsingSpringDataJpa Request received : "+insertRequest.toString());
-		repositoryImpl.insert(insertRequest.getGpuname(), insertRequest.getCompany());
+		springDataJpaRepositoryDAO.insert(insertRequest.getGpuname(), insertRequest.getCompany());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PostMapping("/update")
 	public ResponseEntity<?> updateRecordUsingSpringDataJpa(@RequestBody UpdateRequestJDBC updateRequest){
 		logger.info("/updateRecordUsingSpringDataJpa Request received : "+updateRequest.toString());
-		repositoryImpl.update(updateRequest.getGpuname(), updateRequest.getCompany());
+		springDataJpaRepositoryDAO.update(updateRequest.getGpuname(), updateRequest.getCompany());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PostMapping("/delete")
 	public ResponseEntity<?> deleteRecordUsingJPA(@RequestBody DeleteRequestJDBC deleteRequest){
 		logger.info("/deleteRecordUsingJPA Request received : "+deleteRequest.toString());
-		repositoryImpl.delete(deleteRequest.getGpuname());
+		springDataJpaRepositoryDAO.delete(deleteRequest.getGpuname());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PostMapping("/select")
 	public ResponseEntity<SelectResponse> selectRecordUsingJPA(@RequestBody SelectRequestJDBC selectRequest){
 		logger.info("/selectRecordUsingJPA Request received : "+selectRequest.toString());
-		gpuinfo gpu = repositoryImpl.select(selectRequest.getGpuname());
+		gpuinfo gpu = springDataJpaRepositoryDAO.select(selectRequest.getGpuname());
 		SelectResponse selectResponse = new SelectResponse();
 		selectResponse.setCompany(gpu.getCompany());
 		selectResponse.setGpuname(gpu.getGpuname());
